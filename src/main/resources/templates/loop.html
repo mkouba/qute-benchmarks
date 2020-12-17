@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Qute Benchmark - Loop</title>
+</head>
+<body>
+
+Dear {name ?: "sir"},
+
+{#if !items.empty}
+here are the items ({items.size}):
+<table>
+    {#each items}
+    <tr>
+        <td>{count}.</td>
+        <td>{it.id}</td>
+        <td>{it.name}</td>
+        <td>{#if it.hasPrice && it.price > 0}{it.price}{#else}free{/if}</td>
+        <td>{it.created.time}</td>
+    </tr>
+    {/each}
+</table>
+{#else}
+No ordered items.
+{/if}
+</body>
+</html>
