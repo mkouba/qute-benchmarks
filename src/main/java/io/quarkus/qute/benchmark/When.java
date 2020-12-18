@@ -3,8 +3,12 @@ package io.quarkus.qute.benchmark;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.Warmup;
 
+@Warmup(batchSize = 100)
+@Measurement(batchSize = 100)
 public class When extends BenchmarkBase {
     
     private Map<String, Object> testData;
