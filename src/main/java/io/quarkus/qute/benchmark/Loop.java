@@ -43,7 +43,7 @@ public class Loop extends BenchmarkBase {
         }
     }
 
-    protected Item generateItem(int idx) {
+    static Item generateItem(int idx) {
         Item item = new Item();
         item.setId(Long.valueOf(idx * 10));
         item.setName("" + idx);

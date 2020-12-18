@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Qute Benchmark - If Complex Condition</title>
+</head>
+<body>
+
+Dear {name ?: "sir"},
+
+{#if !item.hasPriceDefined || (item.price > 5000 && item.price < 10000) || item.description eq 'Foo!'}
+The price {item.price} is too odd.
+{#else}
+No problem.
+{/if}
+</body>
+</html>

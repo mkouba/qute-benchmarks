@@ -37,10 +37,7 @@ import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateLocator;
 import io.quarkus.qute.ValueResolver;
 import io.quarkus.qute.Variant;
-import io.quarkus.qute.benchmark.data.Food;
 import io.quarkus.qute.benchmark.data.Item;
-import io.quarkus.qute.benchmark.data.Origin;
-import io.quarkus.qute.benchmark.data.Toy;
 import io.quarkus.qute.generator.ValueResolverGenerator;
 
 @Fork(5)
@@ -51,7 +48,7 @@ import io.quarkus.qute.generator.ValueResolverGenerator;
 @State(Scope.Benchmark)
 public abstract class BenchmarkBase {
 
-    static final Class<?>[] DATA_CLASSES = { Item.class, Food.class, Origin.class, Toy.class };
+    static final Class<?>[] DATA_CLASSES = { Item.class };
 
     private Template template;
 

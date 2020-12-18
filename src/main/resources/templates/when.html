@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Qute Benchmark - When</title>
+</head>
+<body>
+
+Dear {name ?: "sir"},
+
+{#when item.price}
+{#is < 5000}
+The price is too low.
+{#is < 1000}
+The price is OK
+{#else}
+The price is too high.
+{/when}
+</body>
+</html>

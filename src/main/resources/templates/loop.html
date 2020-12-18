@@ -11,15 +11,15 @@ Dear {name ?: "sir"},
 {#if !items.empty}
 here are the items ({items.size}):
 <table>
-    {#each items}
+    {#for item in items}
     <tr>
         <td>{count}.</td>
-        <td>{it.id}</td>
-        <td>{it.name}</td>
-        <td>{#if it.hasPrice && it.price > 0}{it.price}{#else}free{/if}</td>
-        <td>{it.created.time}</td>
+        <td>{item.id}</td>
+        <td>{item.name}</td>
+        <td>{#if item.hasPriceDefined && item.price > 0}{item.price}{#else}free{/if}</td>
+        <td>{item.created.time}</td>
     </tr>
-    {/each}
+    {/for}
 </table>
 {#else}
 No ordered items.

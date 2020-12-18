@@ -31,6 +31,32 @@ public class ExpectedOutputTest {
         assertOutput("/expected_loop.html", benchmark.render());
     }
 
+    @Test
+    public void testIfComplexCondition() throws Exception {
+        IfComplexCondition benchmark = new IfComplexCondition();
+        benchmark.setup();
+        assertOutput("/expected_if-complex-condition.html", benchmark.render());
+    }
+
+    @Test
+    public void testIfSimple() throws Exception {
+        IfSimple benchmark = new IfSimple();
+        benchmark.setup();
+        assertOutput("/expected_if-simple.html", benchmark.render());
+    }
+
+    @Test
+    public void testWhen() throws Exception {
+        try {
+            // "when" was added in 1.11
+            getClass().getClassLoader().loadClass("io.quarkus.qute.WhenSectionHelper");
+            When benchmark = new When();
+            benchmark.setup();
+            assertOutput("/expected_when.html", benchmark.render());
+        } catch (ClassNotFoundException ignored) {
+        }
+    }
+
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));
     }

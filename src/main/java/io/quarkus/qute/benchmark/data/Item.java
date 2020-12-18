@@ -39,12 +39,8 @@ public class Item {
         this.price = price;
     }
 
-    public boolean hasPrice() {
+    public boolean hasPriceDefined() {
         return price != null;
-    }
-
-    public boolean isToy() {
-        return this instanceof Toy;
     }
 
     public Date getCreated() {
