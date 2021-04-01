@@ -15,7 +15,7 @@
         <version.qute>999-SNAPSHOT</version.qute>
         <version.junit>4.11</version.junit>
         <version.slf4j>1.7.10</version.slf4j>
-        <version.jmh>1.27</version.jmh>
+        <version.jmh>1.29</version.jmh>
         <version.xchart>2.5.1</version.xchart>
         <version.gson>2.8.6</version.gson>
         <version.vectorgraphics2d>0.9.3</version.vectorgraphics2d>

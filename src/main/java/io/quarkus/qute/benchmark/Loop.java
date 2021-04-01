@@ -19,11 +19,7 @@ public class Loop extends BenchmarkBase {
     public void setup() throws Exception {
         super.setup();
         testData = new HashMap<String, Object>();
-        List<Item> items = new ArrayList<Item>();
-        for (int i = 0; i < 15; i++) {
-            items.add(generateItem(i));
-        }
-        testData.put("items", items);
+        testData.put("items", generateItems(15));
         testData.put("name", "Foo");
     }
 
@@ -41,6 +37,14 @@ public class Loop extends BenchmarkBase {
         if (!result.contains("Dear Foo")) {
             throw new AssertionError("Incorrect result: " + result);
         }
+    }
+
+    static List<Item> generateItems(int size) {
+        List<Item> items = new ArrayList<Item>();
+        for (int i = 0; i < size; i++) {
+            items.add(generateItem(i));
+        }
+        return items;
     }
 
     static Item generateItem(int idx) {

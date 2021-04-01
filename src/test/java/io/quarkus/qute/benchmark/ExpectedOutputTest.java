@@ -56,6 +56,13 @@ public class ExpectedOutputTest {
         } catch (ClassNotFoundException ignored) {
         }
     }
+    
+    @Test
+    public void testNamedResolver() throws Exception {
+        NameResolver benchmark = new NameResolver();
+        benchmark.setup();
+        assertOutput("/expected_name-resolver.html", benchmark.render());
+    }
 
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));
