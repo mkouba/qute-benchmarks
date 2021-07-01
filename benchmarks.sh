@@ -1,8 +1,8 @@
 #!/bin/sh
 
 #QUTE_VERSIONS="999-SNAPSHOT";
-#QUTE_VERSIONS="1.6.1.Final 1.7.6.Final 1.8.3.Final 1.9.2.Final 1.10.5.Final 1.11.6.Final 1.12.2.Final 1.13.0.Final 999-SNAPSHOT";
-QUTE_VERSIONS="999-SNAPSHOT 1.10.5.Final";
+QUTE_VERSIONS="1.6.1.Final 1.7.6.Final 1.8.3.Final 1.9.2.Final 1.10.5.Final 1.11.6.Final 1.12.2.Final 1.13.7.Final 2.0.0.Final 999-SNAPSHOT";
+#QUTE_VERSIONS="1.13.7.Final 2.0.0.Final 999-SNAPSHOT";
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
