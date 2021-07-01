@@ -12,5 +12,5 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Clean
-        run: mvn clean
+      - name: Run
+        run: ./benchmarks.sh
