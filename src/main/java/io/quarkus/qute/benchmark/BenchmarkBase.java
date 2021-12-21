@@ -65,8 +65,19 @@ public abstract class BenchmarkBase {
         Set<String> types = generateClasses();
 
         // Build engine
-        EngineBuilder builder = Engine.builder()
-                .addDefaults()
+        EngineBuilder builder = Engine.builder();
+
+        Method iterationMetadataPrefix;
+        try {
+            iterationMetadataPrefix = EngineBuilder.class.getMethod("iterationMetadataPrefix", String.class);
+        } catch (Exception e) {
+            iterationMetadataPrefix = null;
+        }
+        if (iterationMetadataPrefix != null) {
+            iterationMetadataPrefix.invoke(builder, "<none>");
+        }
+
+        builder.addDefaults()
                 .addValueResolver(new ReflectionValueResolver());
 
         for (String resolverClass : types) {
