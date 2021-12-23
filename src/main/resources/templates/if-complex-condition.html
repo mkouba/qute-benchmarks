@@ -8,7 +8,7 @@
 
 Dear {name ?: "sir"},
 
-{#if !item.hasPriceDefined || (item.price > 5000 && item.price < 10000) || item.description eq 'Foo!'}
+{#if item.hasNoPrice || (item.price > 5000 && item.price < 10000) || item.description eq 'Foo!'}
 The price {item.price} is too odd.
 {#else}
 No problem.

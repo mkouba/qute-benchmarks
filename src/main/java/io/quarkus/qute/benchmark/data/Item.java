@@ -42,6 +42,10 @@ public class Item {
     public boolean hasPriceDefined() {
         return price != null;
     }
+    
+    public boolean hasNoPrice() {
+        return price == null;
+    }
 
     public Date getCreated() {
         return created;
