@@ -2,17 +2,16 @@ package io.quarkus.qute.benchmark;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.Warmup;
 
+import io.quarkus.qute.CompletedStage;
 import io.quarkus.qute.EngineBuilder;
 import io.quarkus.qute.EvalContext;
 import io.quarkus.qute.NamespaceResolver;
-import io.quarkus.qute.benchmark.data.Item;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
@@ -29,12 +28,12 @@ public class NameResolver extends BenchmarkBase {
 
     @Override
     protected void customizeEngine(EngineBuilder builder) {
-        Item item = Loop.generateItem(6);
+        CompletionStage<Object> item = CompletedStage.of(Loop.generateItem(6));
         builder.addNamespaceResolver(new NamespaceResolver() {
 
             @Override
             public CompletionStage<Object> resolve(EvalContext context) {
-                return CompletableFuture.completedFuture(item);
+                return item;
             }
 
             @Override
