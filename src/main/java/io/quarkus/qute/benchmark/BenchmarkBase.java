@@ -50,7 +50,8 @@ public abstract class BenchmarkBase {
 
     static final Class<?>[] DATA_CLASSES = { Item.class };
 
-    private Template template;
+    protected Template template;
+    protected Engine engine;
 
     @Benchmark
     public String render() {
@@ -108,7 +109,7 @@ public abstract class BenchmarkBase {
         });
 
         customizeEngine(builder);
-        Engine engine = builder.build();
+        engine = builder.build();
 
         template = engine.getTemplate(getTemplateName());
     }

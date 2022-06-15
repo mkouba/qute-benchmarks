@@ -1,7 +1,7 @@
 #!/bin/sh
 
-#QUTE_VERSIONS="999-SNAPSHOT";
-QUTE_VERSIONS="2.4.2.Final 2.5.4.Final 2.6.1.Final 999-SNAPSHOT";
+QUTE_VERSIONS="2.8.3.Final 999-SNAPSHOT";
+#QUTE_VERSIONS="2.4.2.Final 2.5.4.Final 2.6.1.Final 999-SNAPSHOT";
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"
@@ -10,7 +10,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="Hello|Loop|Loop50|IfSimple|IfComplexCondition|NameResolver"
+    BENCHMARKS="Hello|Loop|Loop50|IfSimple|IfComplexCondition|NameResolver|IncludeSimple"
 fi
 
 echo "Qute versions to test: $QUTE_VERSIONS";

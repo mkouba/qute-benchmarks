@@ -63,6 +63,14 @@ public class ExpectedOutputTest {
         benchmark.setup();
         assertOutput("/expected_name-resolver.html", benchmark.render());
     }
+    
+    @Test
+    public void testIncludeSimple() throws Exception {
+        IncludeSimple benchmark = new IncludeSimple();
+        benchmark.setup();
+        assertOutput("/expected_include-simple.html", benchmark.render());
+    }
+
 
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));
