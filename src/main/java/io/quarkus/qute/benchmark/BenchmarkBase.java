@@ -41,8 +41,8 @@ import io.quarkus.qute.benchmark.data.Item;
 import io.quarkus.qute.generator.ValueResolverGenerator;
 
 @Fork(5)
-@Warmup(iterations = 5, time = 1)
-@Measurement(iterations = 5, time = 2)
+@Warmup(iterations = 3, time = 1)
+@Measurement(iterations = 5, time = 1)
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)

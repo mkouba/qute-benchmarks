@@ -70,7 +70,20 @@ public class ExpectedOutputTest {
         benchmark.setup();
         assertOutput("/expected_include-simple.html", benchmark.render());
     }
+    
+    @Test
+    public void testLetSimple() throws Exception {
+        LetSimple benchmark = new LetSimple();
+        benchmark.setup();
+        assertOutput("/expected_let-simple.html", benchmark.render());
+    }
 
+    @Test
+    public void testLetComplex() throws Exception {
+        LetComplex benchmark = new LetComplex();
+        benchmark.setup();
+        assertOutput("/expected_let-complex.html", benchmark.render());
+    }
 
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));
