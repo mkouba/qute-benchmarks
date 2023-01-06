@@ -86,7 +86,7 @@ public class ChartGenerator {
             }
         });
 
-        Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(1280).height(1024).title("Qute Microbenchmarks")
+        Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(1920).height(1080).title("Qute Microbenchmarks")
                 .xAxisTitle("Benchmarks")
                 .yAxisTitle("Ops/s").build();
         chart.getStyleManager().setXAxisTicksVisible(true);

@@ -84,6 +84,13 @@ public class ExpectedOutputTest {
         benchmark.setup();
         assertOutput("/expected_let-complex.html", benchmark.render());
     }
+    
+    @Test
+    public void testPojoResolver() throws Exception {
+        JavaBeanValueResolver benchmark = new JavaBeanValueResolver();
+        benchmark.setup();
+        assertOutput("/expected_javabean.html", benchmark.render());
+    }
 
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));

@@ -38,6 +38,7 @@ import io.quarkus.qute.TemplateLocator;
 import io.quarkus.qute.ValueResolver;
 import io.quarkus.qute.Variant;
 import io.quarkus.qute.benchmark.data.Item;
+import io.quarkus.qute.benchmark.data.JavaBean;
 import io.quarkus.qute.generator.ValueResolverGenerator;
 
 @Fork(5)
@@ -48,7 +49,7 @@ import io.quarkus.qute.generator.ValueResolverGenerator;
 @State(Scope.Benchmark)
 public abstract class BenchmarkBase {
 
-    static final Class<?>[] DATA_CLASSES = { Item.class };
+    static final Class<?>[] DATA_CLASSES = { Item.class, JavaBean.class };
 
     protected Template template;
     protected Engine engine;
