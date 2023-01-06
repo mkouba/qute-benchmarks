@@ -10,7 +10,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="Hello|HelloParser|Loop|Loop50|IfSimple|IfComplexCondition|NameResolver|IncludeSimple|When|LetSimple|LetComplex"
+    BENCHMARKS="Hello|HelloParser|Loop|Loop50|IfSimple|IfComplexCondition|NameResolver|IncludeSimple|When|LetSimple|LetComplex|JavaBeanValueResolver"
 fi
 
 echo "Qute versions to test: $QUTE_VERSIONS";
