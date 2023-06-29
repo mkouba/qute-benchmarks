@@ -49,7 +49,7 @@ import io.quarkus.qute.generator.ValueResolverGenerator;
 @State(Scope.Benchmark)
 public abstract class BenchmarkBase {
 
-    static final Class<?>[] DATA_CLASSES = { Item.class, JavaBean.class };
+    static final Class<?>[] DATA_CLASSES = { Item.class, JavaBean.class, JavaBean.State.class };
 
     protected Template template;
     protected Engine engine;
