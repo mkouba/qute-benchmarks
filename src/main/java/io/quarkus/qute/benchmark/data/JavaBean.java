@@ -72,5 +72,21 @@ public class JavaBean {
     public String toString() {
         return str;
     }
+    
+    public boolean isActive() {
+        return true;
+    }
+    
+    public Boolean isEnough() {
+        return false;
+    }
+    
+    public State getState() {
+        return State.ON;
+    }
+    
+    public enum State {
+        ON, OFF, UNKNOWN
+    }
 
 }
