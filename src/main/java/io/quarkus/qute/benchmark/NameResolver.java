@@ -15,7 +15,7 @@ import io.quarkus.qute.NamespaceResolver;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class NameResolver extends BenchmarkBase {
+public class NameResolver extends SimpleBenchmarkBase {
 
     private Map<String, Object> testData;
 

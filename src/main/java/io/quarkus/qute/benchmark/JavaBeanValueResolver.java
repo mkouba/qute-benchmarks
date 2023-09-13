@@ -14,7 +14,7 @@ import io.quarkus.qute.benchmark.data.JavaBean;
  */
 @Warmup(batchSize = 10)
 @Measurement(batchSize = 10)
-public class JavaBeanValueResolver extends BenchmarkBase {
+public class JavaBeanValueResolver extends SimpleBenchmarkBase {
 
     private final AtomicLong idGenerator = new AtomicLong();
 

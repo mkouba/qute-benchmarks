@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Min testable version is 2.7.0 
-QUTE_VERSIONS="2.16.7.Final 3.0.4.Final 3.1.2.Final 999-SNAPSHOT";
+QUTE_VERSIONS="2.16.7.Final 3.2.5.Final 3.3.2 999-SNAPSHOT";
 
 # Set max to use Runtime.getRuntime().availableProcessors()
 THREADS="1"

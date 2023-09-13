@@ -9,7 +9,7 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class IfComplexCondition extends BenchmarkBase {
+public class IfComplexCondition extends SimpleBenchmarkBase {
     
     private Map<String, Object> testData;
 

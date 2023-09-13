@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.openjdk.jmh.annotations.Setup;
 
-public class Loop50 extends BenchmarkBase {
+public class Loop50 extends SimpleBenchmarkBase {
 
     private Map<String, Object> testData;
 

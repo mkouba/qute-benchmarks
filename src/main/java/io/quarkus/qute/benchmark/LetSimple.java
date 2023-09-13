@@ -5,7 +5,7 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class LetSimple extends BenchmarkBase {
+public class LetSimple extends SimpleBenchmarkBase {
 
     protected String getTemplateName() {
         return "let-simple.html";

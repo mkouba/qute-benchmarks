@@ -8,7 +8,7 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class IncludeSimple extends BenchmarkBase {
+public class IncludeSimple extends SimpleBenchmarkBase {
 
     @Setup
     public void setup() throws Exception {

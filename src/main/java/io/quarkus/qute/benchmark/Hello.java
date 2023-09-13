@@ -9,7 +9,7 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class Hello extends BenchmarkBase {
+public class Hello extends SimpleBenchmarkBase {
 
     private Map<String, Object> testData;
 
