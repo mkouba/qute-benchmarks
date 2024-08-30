@@ -18,7 +18,7 @@ public class ExpectedOutputTest {
     }
 
     @Test
-    public void testHello() throws Exception {
+    public void testHelloSimple() throws Exception {
         HelloSimple benchmark = new HelloSimple();
         benchmark.setup();
         assertOutput("/expected_hello.html", benchmark.render());
@@ -32,10 +32,10 @@ public class ExpectedOutputTest {
     }
 
     @Test
-    public void testIfComplexCondition() throws Exception {
+    public void testIfComplex() throws Exception {
         IfComplex benchmark = new IfComplex();
         benchmark.setup();
-        assertOutput("/expected_if-complex-condition.html", benchmark.render());
+        assertOutput("/expected_if-complex.html", benchmark.render());
     }
 
     @Test

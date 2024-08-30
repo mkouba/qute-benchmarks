@@ -21,7 +21,7 @@ public class IfComplex extends SimpleBenchmarkBase {
     }
 
     protected String getTemplateName() {
-        return "if-complex-condition.html";
+        return "if-complex.html";
     }
 
     @Override
