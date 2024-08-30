@@ -13,7 +13,7 @@ import org.openjdk.jmh.annotations.Setup;
 
 import io.quarkus.qute.benchmark.data.Item;
 
-public class Loop extends SimpleBenchmarkBase {
+public class Loop15 extends SimpleBenchmarkBase {
 
     private Map<String, Object> testData;
 

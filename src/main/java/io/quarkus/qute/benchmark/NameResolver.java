@@ -28,7 +28,7 @@ public class NameResolver extends SimpleBenchmarkBase {
 
     @Override
     protected void customizeEngine(EngineBuilder builder) {
-        CompletionStage<Object> item = CompletedStage.of(Loop.generateItem(6));
+        CompletionStage<Object> item = CompletedStage.of(Loop15.generateItem(6));
         builder.addNamespaceResolver(new NamespaceResolver() {
 
             @Override

@@ -9,19 +9,19 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @Warmup(batchSize = 100)
 @Measurement(batchSize = 100)
-public class IfComplexCondition extends SimpleBenchmarkBase {
-    
+public class HelloSimple extends SimpleBenchmarkBase {
+
     private Map<String, Object> testData;
 
     @Setup
     public void setup() throws Exception {
         super.setup();
-        testData = new HashMap<>();
-        testData.put("item", Loop.generateItem(6));
+        testData = new HashMap<String, Object>();
+        testData.put("name", "Foo");
     }
 
     protected String getTemplateName() {
-        return "if-complex-condition.html";
+        return "hello.html";
     }
 
     @Override
@@ -31,7 +31,7 @@ public class IfComplexCondition extends SimpleBenchmarkBase {
 
     @Override
     protected void assertResult(String result) {
-        if (!result.contains("Dear sir")) {
+        if (!result.contains("Hello Foo!")) {
             throw new AssertionError("Incorrect result: " + result);
         }
     }

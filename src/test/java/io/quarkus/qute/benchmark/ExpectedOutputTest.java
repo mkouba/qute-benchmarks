@@ -19,21 +19,21 @@ public class ExpectedOutputTest {
 
     @Test
     public void testHello() throws Exception {
-        Hello benchmark = new Hello();
+        HelloSimple benchmark = new HelloSimple();
         benchmark.setup();
         assertOutput("/expected_hello.html", benchmark.render());
     }
 
     @Test
     public void testLoop() throws Exception {
-        Loop benchmark = new Loop();
+        Loop15 benchmark = new Loop15();
         benchmark.setup();
         assertOutput("/expected_loop.html", benchmark.render());
     }
 
     @Test
     public void testIfComplexCondition() throws Exception {
-        IfComplexCondition benchmark = new IfComplexCondition();
+        IfComplex benchmark = new IfComplex();
         benchmark.setup();
         assertOutput("/expected_if-complex-condition.html", benchmark.render());
     }

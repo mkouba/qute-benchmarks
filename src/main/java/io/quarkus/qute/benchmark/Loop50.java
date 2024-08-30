@@ -13,7 +13,7 @@ public class Loop50 extends SimpleBenchmarkBase {
     public void setup() throws Exception {
         super.setup();
         testData = new HashMap<String, Object>();
-        testData.put("items", Loop.generateItems(50));
+        testData.put("items", Loop15.generateItems(50));
         testData.put("name", "Foo");
     }
 

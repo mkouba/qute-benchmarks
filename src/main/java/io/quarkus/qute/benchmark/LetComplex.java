@@ -17,7 +17,7 @@ public class LetComplex extends SimpleBenchmarkBase {
     public void setup() throws Exception {
         super.setup();
         testData = new HashMap<>();
-        testData.put("item", Loop.generateItem(6));
+        testData.put("item", Loop15.generateItem(6));
         testData.put("baz", true);
     }
 
