@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.io.Reader;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.StyleManager.ChartType;
+
+import io.quarkus.qute.Qute;
 
 public class ChartGenerator {
 
@@ -128,6 +131,22 @@ public class ChartGenerator {
                 }
             }
             chart.addSeries(series.getKey(), benchmarks, scores, errors);
+        }
+
+        // Print the summary table
+        System.out.println("\nResults Summary table:\n");
+        System.out.println(Qute.fmt("\t\t{#each data[0].keySet}| {it}\t\t{/each}", seriesMap));
+        for (String benchmark : sortedBenchmarks) {
+            String[] scores = new String[seriesMap.size()];
+            int idx = 0;
+            for (Entry<String, Map<String, JsonObject>> series : seriesMap.entrySet()) {
+                BigDecimal score = series.getValue().get(benchmark).get("primaryMetric").getAsJsonObject().get("score")
+                        .getAsBigDecimal().setScale(2, RoundingMode.HALF_UP);
+                BigDecimal scoreError = series.getValue().get(benchmark).get("primaryMetric").getAsJsonObject()
+                        .get("scoreError").getAsBigDecimal().setScale(2, RoundingMode.HALF_UP);
+                scores[idx++] = score + " ± " + scoreError;
+            }
+            System.out.println(Qute.fmt("{}\t\t{#each data[1]}| {it}\t{/each}", benchmark, scores));
         }
 
         // Save as png
