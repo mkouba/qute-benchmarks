@@ -12,7 +12,7 @@ Dear {name ?: "sir"},
 here are the items ({items.size}):
 <table>
     {#for item in items}
-    <tr>
+    <tr class="{item_indexParity}">
         <td>{item_count}.</td>
         <td>{item.id}</td>
         <td>{item.name}</td>
