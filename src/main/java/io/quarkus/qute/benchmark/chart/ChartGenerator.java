@@ -134,19 +134,30 @@ public class ChartGenerator {
         }
 
         // Print the summary table
-        System.out.println("\nResults Summary table:\n");
-        System.out.println(Qute.fmt("\t\t{#each data[0].keySet}| {it}\t\t{/each}", seriesMap));
+        System.out.println("\nResults summary:\n");
+        System.out.println(Qute.fmt("{data[0]}{#each data[1]}|{it}{/each}", pad(""),
+                seriesMap.keySet().stream().map(ChartGenerator::pad).toList()));
+        BigDecimal lastScore = null;
         for (String benchmark : sortedBenchmarks) {
             String[] scores = new String[seriesMap.size()];
             int idx = 0;
             for (Entry<String, Map<String, JsonObject>> series : seriesMap.entrySet()) {
                 BigDecimal score = series.getValue().get(benchmark).get("primaryMetric").getAsJsonObject().get("score")
-                        .getAsBigDecimal().setScale(2, RoundingMode.HALF_UP);
+                        .getAsBigDecimal().setScale(0, RoundingMode.HALF_UP);
                 BigDecimal scoreError = series.getValue().get(benchmark).get("primaryMetric").getAsJsonObject()
-                        .get("scoreError").getAsBigDecimal().setScale(2, RoundingMode.HALF_UP);
-                scores[idx++] = score + " ± " + scoreError;
+                        .get("scoreError").getAsBigDecimal().setScale(0, RoundingMode.HALF_UP);
+                String diffStr = "";
+                if (lastScore != null) {
+                    BigDecimal diff = score.divide(lastScore, 2, RoundingMode.HALF_UP)
+                            .subtract(BigDecimal.ONE)
+                            .multiply(new BigDecimal(100))
+                            .setScale(0, RoundingMode.HALF_UP);
+                    diffStr = " (" + (diff.signum() == 1 ? "+" + diff.toString() : diff.toString()) + "%)";
+                }
+                lastScore = score;
+                scores[idx++] = pad(score + " ± " + scoreError + diffStr);
             }
-            System.out.println(Qute.fmt("{}\t\t{#each data[1]}| {it}\t{/each}", benchmark, scores));
+            System.out.println(Qute.fmt("{data[0]}{#each data[1]}|{it}{/each}", pad(benchmark), scores));
         }
 
         // Save as png
@@ -157,6 +168,10 @@ public class ChartGenerator {
         try (Reader reader = Files.newBufferedReader(inputFile.toPath(), Charset.forName("UTF-8"))) {
             return JsonParser.parseReader(reader);
         }
+    }
+
+    static String pad(String val) {
+        return String.format("%1$-25s", val);
     }
 
 }
