@@ -134,11 +134,19 @@ public class ChartGenerator {
         }
 
         // Print the summary table
-        System.out.println("\nResults summary:\n");
-        System.out.println(Qute.fmt("{data[0]}{#each data[1]}|{it}{/each}", pad(""),
-                seriesMap.keySet().stream().map(ChartGenerator::pad).toList()));
-        System.out.println(Qute.fmt("{data[0]}{#for i in data[1]}|{data[0]}{/for}", "-".repeat(25),
-                seriesMap.size()));
+        // 1st line
+        System.out.println(Qute.fmt("{title}{#each versions}|{it}{/each}", Map.of("title", padRight("RESULTS SUMMARY"),
+                "versions", seriesMap.keySet().stream().map(ChartGenerator::padRight).toList())));
+        // 2nd line
+        System.out
+                .println(Qute.fmt("{sep}{#for i in versions.size}|{columns}{/for}",
+                        Map.of("sep", "=".repeat(DEFAULT_PAD), "versions",
+                                seriesMap.keySet().stream().map(ChartGenerator::padRight).toList(), "columns",
+                                "Score     |Error |Diff   ")));
+        // 3rd line - separator
+        System.out.println(Qute.fmt("{sep}{#for i in versions}|{sep}{/for}", Map.of("sep", "-".repeat(DEFAULT_PAD), "versions",
+                seriesMap.size())));
+        // Data lines
         for (String benchmark : sortedBenchmarks) {
             BigDecimal lastScore = null;
             String[] scores = new String[seriesMap.size()];
@@ -154,12 +162,14 @@ public class ChartGenerator {
                             .subtract(BigDecimal.ONE)
                             .multiply(new BigDecimal(100))
                             .setScale(0, RoundingMode.HALF_UP);
-                    diffStr = " (" + (diff.signum() == 1 ? "+" + diff.toString() : diff.toString()) + "%)";
+                    diffStr = (diff.signum() == 1 ? "+" + diff.toString() : diff.toString()) + "%";
                 }
                 lastScore = score;
-                scores[idx++] = pad(score + " ± " + scoreError + diffStr);
+                scores[idx++] = padLeft(score.toString(), 9) + "|" + padLeft(scoreError.toString(), 7) + "|"
+                        + padLeft(diffStr, 7);
             }
-            System.out.println(Qute.fmt("{data[0]}{#each data[1]}|{it}{/each}", pad(benchmark), scores));
+            System.out.println(Qute.fmt("{benchmark}{#each scores}|{it}{/each}",
+                    Map.of("benchmark", padRight(benchmark), "scores", scores)));
         }
 
         // Save as png
@@ -172,8 +182,22 @@ public class ChartGenerator {
         }
     }
 
-    static String pad(String val) {
-        return String.format("%1$-25s", val);
+    static int DEFAULT_PAD = 25;
+
+    static String padRight(String val, int pad) {
+        return String.format("%1$-" + pad + "s", val);
+    }
+
+    static String padLeft(String val, int pad) {
+        return String.format("%1$" + pad + "s", val);
+    }
+
+    static String padRight(String val) {
+        return padRight(val, DEFAULT_PAD);
+    }
+
+    static String padLeft(String val) {
+        return padLeft(val, DEFAULT_PAD);
     }
 
 }
