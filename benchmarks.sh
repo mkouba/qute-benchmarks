@@ -20,7 +20,7 @@ contains_arg() {
 }
 
 # Min testable version is 2.7.0 
-if [ -z $QUTE_VERSIONS ]; then
+if [ -z "$QUTE_VERSIONS" ]; then
     QUTE_VERSIONS="2.16.12.Final 3.2.12.Final 3.8.6 3.14.1 999-SNAPSHOT"
 fi
 

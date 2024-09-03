@@ -137,8 +137,10 @@ public class ChartGenerator {
         System.out.println("\nResults summary:\n");
         System.out.println(Qute.fmt("{data[0]}{#each data[1]}|{it}{/each}", pad(""),
                 seriesMap.keySet().stream().map(ChartGenerator::pad).toList()));
-        BigDecimal lastScore = null;
+        System.out.println(Qute.fmt("{data[0]}{#for i in data[1]}|{data[0]}{/for}", "-".repeat(25),
+                seriesMap.size()));
         for (String benchmark : sortedBenchmarks) {
+            BigDecimal lastScore = null;
             String[] scores = new String[seriesMap.size()];
             int idx = 0;
             for (Entry<String, Map<String, JsonObject>> series : seriesMap.entrySet()) {
