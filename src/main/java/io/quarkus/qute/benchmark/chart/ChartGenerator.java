@@ -142,7 +142,7 @@ public class ChartGenerator {
                 .println(Qute.fmt("{sep}{#for i in versions.size}|{columns}{/for}",
                         Map.of("sep", "=".repeat(DEFAULT_PAD), "versions",
                                 seriesMap.keySet().stream().map(ChartGenerator::padRight).toList(), "columns",
-                                "Score     |Error |Diff   ")));
+                                "Score    |Error  |Diff   ")));
         // 3rd line - separator
         System.out.println(Qute.fmt("{sep}{#for i in versions}|{sep}{/for}", Map.of("sep", "-".repeat(DEFAULT_PAD), "versions",
                 seriesMap.size())));
