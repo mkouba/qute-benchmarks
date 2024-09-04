@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Set;
 
 import com.google.gson.JsonArray;
@@ -134,21 +135,24 @@ public class ChartGenerator {
         }
 
         // Print the summary table
+        List<String> versions = seriesMap.keySet().stream().collect(Collectors.toList());
+        versions.set(0, versions.get(0) + " (Base)");
+        versions.replaceAll(ChartGenerator::padRight);
         // 1st line
         System.out.println(Qute.fmt("{title}{#each versions}|{it}{/each}", Map.of("title", padRight("RESULTS SUMMARY"),
-                "versions", seriesMap.keySet().stream().map(ChartGenerator::padRight).toList())));
+                "versions", versions)));
         // 2nd line
         System.out
                 .println(Qute.fmt("{sep}{#for i in versions.size}|{columns}{/for}",
                         Map.of("sep", "=".repeat(DEFAULT_PAD), "versions",
-                                seriesMap.keySet().stream().map(ChartGenerator::padRight).toList(), "columns",
+                                versions, "columns",
                                 "Score    |Error  |Diff   ")));
         // 3rd line - separator
         System.out.println(Qute.fmt("{sep}{#for i in versions}|{sep}{/for}", Map.of("sep", "-".repeat(DEFAULT_PAD), "versions",
-                seriesMap.size())));
+                versions)));
         // Data lines
         for (String benchmark : sortedBenchmarks) {
-            BigDecimal lastScore = null;
+            BigDecimal baseScore = null;
             String[] scores = new String[seriesMap.size()];
             int idx = 0;
             for (Entry<String, Map<String, JsonObject>> series : seriesMap.entrySet()) {
@@ -157,14 +161,15 @@ public class ChartGenerator {
                 BigDecimal scoreError = series.getValue().get(benchmark).get("primaryMetric").getAsJsonObject()
                         .get("scoreError").getAsBigDecimal().setScale(0, RoundingMode.HALF_UP);
                 String diffStr = "";
-                if (lastScore != null) {
-                    BigDecimal diff = score.divide(lastScore, 2, RoundingMode.HALF_UP)
+                if (baseScore == null) {
+                    baseScore = score;
+                } else {
+                    BigDecimal diff = score.divide(baseScore, 2, RoundingMode.HALF_UP)
                             .subtract(BigDecimal.ONE)
                             .multiply(new BigDecimal(100))
                             .setScale(0, RoundingMode.HALF_UP);
                     diffStr = (diff.signum() == 1 ? "+" + diff.toString() : diff.toString()) + "%";
                 }
-                lastScore = score;
                 scores[idx++] = padLeft(score.toString(), 9) + "|" + padLeft(scoreError.toString(), 7) + "|"
                         + padLeft(diffStr, 7);
             }

@@ -17,9 +17,21 @@ Run all benchmarks with all Qute versions:
 ```
 
 The results are stored in the `target` directory.
-A results file has the `results-` followed by the version, e.g `results-3.14.1.json`.
+A results file has the `results-` prefix followed by the version, e.g `results-3.14.1.json`.
 A chart is generated in the root directory of the project. 
 The file is named `qute-microbenchmarks.png`.
+A results summary table is also printed in the output.
+It looks like:
+
+```
+RESULTS SUMMARY          |3.8.6 (Base)             |3.14.1                   |999-SNAPSHOT             
+=========================|Score    |Error  |Diff   |Score    |Error  |Diff   |Score    |Error  |Diff   
+-------------------------|-------------------------|-------------------------|-------------------------
+HelloSimple              |    57824|   4770|       |    55215|   6143|    -5%|    60895|   1694|    +5%
+```
+
+> [!NOTE]
+> The `Diff` value is a difference from the base result - the result of the leftmost version marked with `(Base)`.
 
 The first argument can be used to select specific benchmarks:
 
