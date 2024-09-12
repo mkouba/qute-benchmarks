@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -90,10 +89,7 @@ public abstract class SimpleBenchmarkBase {
         EngineBuilder builder = Engine.builder();
 
         // TODO
-        Set<String> allResolvers = new HashSet<>(valueResolverTypes);
-        allResolvers.add(ReflectionValueResolver.class.getName());
-
-        String generatedResolverInvokerClassName = generateResolverInvoker(index, classOutput, allResolvers);
+        String generatedResolverInvokerClassName = generateResolverInvoker(index, classOutput, valueResolverTypes);
         if (generatedResolverInvokerClassName != null) {
             Method setResolverInvoker = Arrays.stream(EngineBuilder.class.getDeclaredMethods())
                     .filter(m -> m.getName().equals("setResolverInvoker")).findFirst().orElse(null);
