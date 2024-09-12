@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -64,14 +67,43 @@ public abstract class SimpleBenchmarkBase {
     @Setup
     public void setup() throws Exception {
 
-        Set<String> types = generateClasses();
+        IndexView index = index(DATA_CLASSES);
+        ClassOutput classOutput = new ClassOutput() {
+
+            @Override
+            public void write(String name, byte[] data) {
+                try {
+                    File dir = new File("target/classes/", name.substring(0, name.lastIndexOf("/")));
+                    dir.mkdirs();
+                    File output = new File("target/classes/", name + ".class");
+                    Files.write(output.toPath(), data);
+                } catch (IOException e) {
+                    throw new IllegalStateException("Cannot dump the class: " + name, e);
+                }
+
+            }
+        };
+
+        Set<String> valueResolverTypes = generateValueResolvers(index, classOutput);
 
         // Build engine
         EngineBuilder builder = Engine.builder();
 
-        builder.addDefaults().addValueResolver(new ReflectionValueResolver());
+        // TODO
+        Set<String> allResolvers = new HashSet<>(valueResolverTypes);
+        allResolvers.add(ReflectionValueResolver.class.getName());
 
-        for (String resolverClass : types) {
+        String generatedResolverInvokerClassName = generateResolverInvoker(index, classOutput, allResolvers);
+        if (generatedResolverInvokerClassName != null) {
+            Method setResolverInvoker = Arrays.stream(EngineBuilder.class.getDeclaredMethods())
+                    .filter(m -> m.getName().equals("setResolverInvoker")).findFirst().orElse(null);
+            if (setResolverInvoker != null) {
+                setResolverInvoker.invoke(builder, instantiate(generatedResolverInvokerClassName));
+            }
+        }
+
+        builder.addDefaults().addValueResolver(new ReflectionValueResolver());
+        for (String resolverClass : valueResolverTypes) {
             builder.addValueResolver(createResolver(resolverClass.replace("/", ".")));
         }
 
@@ -134,6 +166,20 @@ public abstract class SimpleBenchmarkBase {
         }
     }
 
+    Object instantiate(String className) {
+        try {
+            ClassLoader cl = Thread.currentThread()
+                    .getContextClassLoader();
+            if (cl == null) {
+                cl = SimpleBenchmarkBase.class.getClassLoader();
+            }
+            Class<?> clazz = cl.loadClass(className);
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to create: " + className, e);
+        }
+    }
+
     static Index index(Class<?>... classes) throws IOException {
         Indexer indexer = new Indexer();
         for (Class<?> clazz : classes) {
@@ -155,23 +201,7 @@ public abstract class SimpleBenchmarkBase {
         return os.toByteArray();
     }
 
-    Set<String> generateClasses() throws IOException {
-        IndexView index = index(DATA_CLASSES);
-        ClassOutput classOutput = new ClassOutput() {
-
-            @Override
-            public void write(String name, byte[] data) {
-                try {
-                    File dir = new File("target/classes/", name.substring(0, name.lastIndexOf("/")));
-                    dir.mkdirs();
-                    File output = new File("target/classes/", name + ".class");
-                    Files.write(output.toPath(), data);
-                } catch (IOException e) {
-                    throw new IllegalStateException("Cannot dump the class: " + name, e);
-                }
-
-            }
-        };
+    Set<String> generateValueResolvers(IndexView index, ClassOutput classOutput) throws IOException {
 
         ValueResolverGenerator.Builder builder = ValueResolverGenerator.builder().setIndex(index).setClassOutput(classOutput);
 
@@ -222,6 +252,27 @@ public abstract class SimpleBenchmarkBase {
         }
 
         return generator.getGeneratedTypes();
+    }
+
+    String generateResolverInvoker(IndexView index, ClassOutput classOutput, Iterable<String> types)
+            throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
+
+        Class<?> resolverInvokerGeneratorClass;
+        try {
+            resolverInvokerGeneratorClass = SimpleBenchmarkBase.class.getClassLoader()
+                    .loadClass("io.quarkus.qute.generator.ResolverInvokerGenerator");
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+
+        // ResolverInvokerGenerator resolverInvokerGenerator = new ResolverInvokerGenerator(index, classOutput);
+        // return resolverInvokerGenerator.generate(types);
+        Constructor<?> constructor = resolverInvokerGeneratorClass.getConstructor(IndexView.class, ClassOutput.class);
+        Object generator = constructor.newInstance(index, classOutput);
+        Method generate = resolverInvokerGeneratorClass.getDeclaredMethod("generate", Iterable.class);
+
+        return generate.invoke(generator, types).toString();
     }
 
 }
