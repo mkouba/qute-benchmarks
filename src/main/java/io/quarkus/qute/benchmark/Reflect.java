@@ -1,10 +1,13 @@
 package io.quarkus.qute.benchmark;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.Warmup;
 
+@Warmup(batchSize = 100)
+@Measurement(batchSize = 100)
 public class Reflect extends SimpleBenchmarkBase {
 
     private Map<String, Object> testData;
@@ -12,8 +15,7 @@ public class Reflect extends SimpleBenchmarkBase {
     @Setup
     public void setup() throws Exception {
         super.setup();
-        testData = new HashMap<String, Object>();
-        testData.put("items", Loop15.generateItems(20));
+        testData = Map.of("item", Loop15.generateItem(42));
     }
 
     protected String getTemplateName() {
