@@ -31,7 +31,7 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="HelloSimple|HelloParser|Loop15|Loop50|IfSimple|IfComplex|NameResolver|IncludeSimple|When|LetSimple|LetComplex|JavaBeanValueResolver"
+    BENCHMARKS="HelloSimple|HelloParser|Loop15|Loop50|IfSimple|IfComplex|NameResolver|IncludeSimple|When|LetSimple|LetComplex|JavaBeanValueResolver|Reflect"
 fi
 
 # Profilers

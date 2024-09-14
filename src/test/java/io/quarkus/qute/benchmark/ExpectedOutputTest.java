@@ -91,6 +91,14 @@ public class ExpectedOutputTest {
         benchmark.setup();
         assertOutput("/expected_javabean.html", benchmark.render());
     }
+    
+    @Test
+    public void testReflect() throws Exception {
+        Reflect benchmark = new Reflect();
+        benchmark.setup();
+        assertOutput("/expected_reflect.html", benchmark.render());
+    }
+
 
     private void assertOutput(String expectedOutputFile, String actual) throws IOException {
         assertEquals(readExpectedOutputResource(expectedOutputFile), actual.replaceAll("\\s", ""));
