@@ -15,7 +15,7 @@ public class Reflect extends SimpleBenchmarkBase {
     @Setup
     public void setup() throws Exception {
         super.setup();
-        testData = Map.of("foo", Loop15.generateItem(42), "bar", Loop15.generateItem(24));
+        testData = Map.of("count", 10, "foo", Loop15.generateItem(42), "bar", Loop15.generateItem(24));
     }
 
     protected String getTemplateName() {
