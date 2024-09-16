@@ -46,6 +46,10 @@ if contains_arg "-flame" "$@"; then
     PROFILERS="$PROFILERS -prof async:libPath=$ASYNC_PROFILER_PATH;output=flamegraph;dir=profile-results"
 fi
 
+if contains_arg "-t4" "$@"; then
+    THREADS="4"
+fi
+
 echo "============================================"
 echo "Qute versions to test: $QUTE_VERSIONS";
 echo "Benchmarks to run: $BENCHMARKS"
