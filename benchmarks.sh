@@ -21,7 +21,7 @@ contains_arg() {
 
 # Min testable version is 2.7.0 
 if [ -z "$QUTE_VERSIONS" ]; then
-    QUTE_VERSIONS="3.2.12.Final 3.8.6 3.14.4 999-SNAPSHOT"
+    QUTE_VERSIONS="3.17.7 3.18.0.CR1 999-SNAPSHOT"
 fi
 
 # Set max to use Runtime.getRuntime().availableProcessors()
@@ -31,7 +31,8 @@ THREADS="1"
 if [ "$1" ]; then
     BENCHMARKS=$1
 else
-    BENCHMARKS="HelloSimple|HelloParser|Loop15|Loop50|IfSimple|IfComplex|NameResolver|IncludeSimple|When|LetSimple|LetComplex|JavaBeanValueResolver|Reflect|JsonEscaping"
+    # JsonEscaping can only run on 3.18+
+    BENCHMARKS="HelloSimple|HelloParser|Loop15|Loop50|IfSimple|IfComplex|NameResolver|IncludeSimple|When|LetSimple|LetComplex|JavaBeanValueResolver|Reflect"
 fi
 
 # Profilers
