@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ import io.quarkus.qute.Variant;
 import io.quarkus.qute.benchmark.data.Item;
 import io.quarkus.qute.benchmark.data.JavaBean;
 import io.quarkus.qute.generator.ValueResolverGenerator;
+import io.quarkus.qute.generator.ValueResolverGenerator.Builder;
 
 @Fork(3)
 @Warmup(iterations = 3, time = 1)
@@ -155,9 +157,8 @@ public abstract class SimpleBenchmarkBase {
         return os.toByteArray();
     }
 
-    Set<String> generateClasses() throws IOException {
-        IndexView index = index(DATA_CLASSES);
-        ClassOutput classOutput = new ClassOutput() {
+    ClassOutput gizmo1ClassOutput() {
+        return new ClassOutput() {
 
             @Override
             public void write(String name, byte[] data) {
@@ -172,10 +173,21 @@ public abstract class SimpleBenchmarkBase {
 
             }
         };
+    }
 
-        ValueResolverGenerator.Builder builder = ValueResolverGenerator.builder().setIndex(index).setClassOutput(classOutput);
+    io.quarkus.gizmo2.ClassOutput gizmo2ClassOutput() {
+        return io.quarkus.gizmo2.ClassOutput.fileWriter(new File("target/classes/").toPath());
+    }
 
-        Class<?> builderClass = builder.getClass();
+    Set<String> generateClasses()
+            throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        IndexView index = index(DATA_CLASSES);
+        
+        Class<Builder> builderClass = ValueResolverGenerator.Builder.class;
+        Method setClassOutput = Arrays.stream(builderClass.getDeclaredMethods()).filter(m -> m.getName().equals("setClassOutput")).findFirst().get();
+        Object classOutput = setClassOutput.getParameterTypes()[0].equals(ClassOutput.class) ? gizmo1ClassOutput() : gizmo2ClassOutput(); 
+        ValueResolverGenerator.Builder builder = ValueResolverGenerator.builder().setIndex(index);
+        setClassOutput.invoke(builder, classOutput);
 
         // This method is used in 1.9+
         Method addClass = null;

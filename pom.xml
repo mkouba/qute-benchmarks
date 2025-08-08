@@ -18,6 +18,8 @@
         <version.jmh>1.33</version.jmh>
         <version.xchart>2.5.1</version.xchart>
         <version.gson>2.8.6</version.gson>
+        <version.gizmo1>1.9.0</version.gizmo1>
+        <version.gizmo2>2.0.0.Beta4</version.gizmo2>
     </properties>
 
     <dependencies>
@@ -32,20 +34,32 @@
             <artifactId>qute-generator</artifactId>
             <version>${version.qute}</version>
         </dependency>
-
+         <dependency>
+                <groupId>io.quarkus.gizmo</groupId>
+                <artifactId>gizmo</artifactId>
+                <version>${version.gizmo1}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus.gizmo</groupId>
+                <artifactId>gizmo2</artifactId>
+                <version>${version.gizmo2}</version>
+            </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>${version.slf4j}</version>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
             <version>${version.jmh}</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.quarkus.qute</groupId>
+            <artifactId>qute-generator</artifactId>
+            <version>${version.qute}</version>
+        </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
