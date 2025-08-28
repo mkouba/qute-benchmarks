@@ -67,8 +67,8 @@ public class Generator {
             """;
 
     public static void main(String[] args) throws IOException {
-        int pojoCount = 60;
-        int extCount = 20;
+        int pojoCount = 100;
+        int extCount = 25;
 
         File outputDir = new File("src/main/java/io/quarkus/qute/benchmark/app");
         if (outputDir.exists()) {
