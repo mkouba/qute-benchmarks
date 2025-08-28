@@ -3,7 +3,7 @@
 This is a collection of JMH benchmarks to verify the performance of [Qute](https://quarkus.io/guides/qute-reference).
 
 > [!NOTE] 
-> By default, the following versions of Qute are tested: **3.15.3** (LTS) **3.18.0.CR1** (latest) **999-SNAPSHOT** (main branch; has to be installed locally). If you want to test different versions, set the `QUTE_VERSIONS` environment variable, e.g. `export QUTE_VERSIONS="3.13.3 3.14.1"`.
+> By default, the following versions of Qute are tested: **3.20.2.1** (LTS) **3.25.4** (latest) **999-SNAPSHOT** (main branch; has to be installed locally). If you want to test different versions, set the `QUTE_VERSIONS` environment variable, e.g. `export QUTE_VERSIONS="3.13.3 3.14.1"`.
 
 > [!IMPORTANT]  
 > The min testable version is 2.7.0.

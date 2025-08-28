@@ -157,7 +157,7 @@ public abstract class SimpleBenchmarkBase {
         return os.toByteArray();
     }
 
-    ClassOutput gizmo1ClassOutput() {
+    static ClassOutput gizmo1ClassOutput() {
         return new ClassOutput() {
 
             @Override
@@ -175,7 +175,7 @@ public abstract class SimpleBenchmarkBase {
         };
     }
 
-    io.quarkus.gizmo2.ClassOutput gizmo2ClassOutput() {
+    static io.quarkus.gizmo2.ClassOutput gizmo2ClassOutput() {
         return io.quarkus.gizmo2.ClassOutput.fileWriter(new File("target/classes/").toPath());
     }
 

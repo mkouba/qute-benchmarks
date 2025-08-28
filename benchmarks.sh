@@ -21,7 +21,7 @@ contains_arg() {
 
 # Min testable version is 2.7.0 
 if [ -z "$QUTE_VERSIONS" ]; then
-    QUTE_VERSIONS="3.25.1 999-SNAPSHOT"
+    QUTE_VERSIONS="3.20.2.1 3.25.4 999-SNAPSHOT"
 fi
 
 # Set max to use Runtime.getRuntime().availableProcessors()

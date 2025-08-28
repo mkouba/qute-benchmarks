@@ -34,6 +34,12 @@
             <artifactId>qute-generator</artifactId>
             <version>${version.qute}</version>
         </dependency>
+        <!-- In order to test the built-in extension methods -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-qute</artifactId>
+            <version>${version.qute}</version>
+        </dependency>
          <dependency>
                 <groupId>io.quarkus.gizmo</groupId>
                 <artifactId>gizmo</artifactId>
