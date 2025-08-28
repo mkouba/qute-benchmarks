@@ -49,10 +49,19 @@ In order to run the JMH with `GCProfiler` enabled add the `-gc` argument to the 
 ./benchmarks.sh -gc
 ```
 
-In order to run the JMH with `AsyncProfiler` enabled to generate a flamegraph add the `-flame` argument to the command:
+In order to run the JMH with `AsyncProfiler` enabled to generate a CPU flamegraph add the `-flame` argument to the command:
 
 ```bash
 ./benchmarks.sh -flame
 ```
+
+In order to run the JMH with `AsyncProfiler` enabled to generate an allocation flamegraph add the `-flame-alloc` argument to the command:
+
+```bash
+./benchmarks.sh -flame-alloc
+```
+
+> [!NOTE]
+> Make sure perf events are available, i.e. run `sudo sysctl kernel.perf_event_paranoid=1` and `sudo sysctl kernel.kptr_restrict=0` in the terminal.
 
 The flamegraphs are located in the `profile-results` directory in the root directory of the project.

@@ -44,7 +44,11 @@ if contains_arg "-gc" "$@"; then
 fi
 
 if contains_arg "-flame" "$@"; then
-    PROFILERS="$PROFILERS -prof async:libPath=$ASYNC_PROFILER_PATH;output=flamegraph;dir=profile-results"
+    PROFILERS="$PROFILERS -prof async:libPath=$ASYNC_PROFILER_PATH;output=flamegraph;dir=target/profile-results"
+fi
+
+if contains_arg "-flame-alloc" "$@"; then
+    PROFILERS="$PROFILERS -prof async:libPath=$ASYNC_PROFILER_PATH;output=flamegraph;event=alloc;dir=target/profile-results"
 fi
 
 if contains_arg "-t4" "$@"; then
