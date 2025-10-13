@@ -55,6 +55,11 @@ if contains_arg "-t4" "$@"; then
     THREADS="4"
 fi
 
+TIER_STOP=""
+if contains_arg "-ts" "$@"; then
+    TIER_STOP="-XX:TieredStopAtLevel=2"
+fi
+
 echo "============================================"
 echo "Qute versions to test: $QUTE_VERSIONS";
 echo "Benchmarks to run: $BENCHMARKS"
@@ -68,6 +73,6 @@ QUTE_VERSIONS_ARRAY=$(echo $QUTE_VERSIONS);
 for i in $QUTE_VERSIONS_ARRAY
 do
   mvn package -Dversion.qute=$i
-  java -jar target/qute-benchmarks.jar -t $THREADS $PROFILERS -rf json -rff target/results-$i.json $BENCHMARKS
+  java -jar $TIER_STOP target/qute-benchmarks.jar -t $THREADS $PROFILERS -rf json -rff target/results-$i.json $BENCHMARKS
   java -cp target/qute-benchmarks.jar io.quarkus.qute.benchmark.chart.ChartGenerator target
 done;
